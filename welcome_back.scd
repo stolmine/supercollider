@@ -18,3 +18,28 @@ num = 4;
 num = num.squared;
 num = num.reciprocal;
 )
+
+// var declaration multi
+
+(
+var thingA = 7, thingB = 5, result;
+thingA = thingA.squared;
+thingB = thingB.reciprocal;
+result = thingA + thingB;
+)
+
+// interpreter vars
+
+(
+n = 4;
+n = n.squared;
+n = n.reciprocal;
+)
+
+// environment vars
+
+(
+~num = 4;
+~num = ~num.squared;
+~num = ~num.reciprocal;
+)
