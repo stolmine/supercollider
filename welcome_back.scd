@@ -62,3 +62,18 @@ n = n.reciprocal;
 // .browse method calls class browser, useful for seeing methods and args relevant to the given class
 Integer.browse;
 
+// the class method returns the class of a given instance
+
+4.class;
+4.0.class;
+4.3.ceil.class;
+ceil(4.3);
+
+2.pow(3);
+2*2*2;
+
+// useful method here
+
+"I'm a string.".reverse;
+
+Symbol.browse;
