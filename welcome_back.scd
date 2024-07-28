@@ -43,3 +43,22 @@ n = n.reciprocal;
 ~num = ~num.squared;
 ~num = ~num.reciprocal;
 )
+
+// postln will print the eval of the given object to the post window
+
+(
+~num = 4;
+~num = ~num.squared.postln;
+~num = ~num.reciprocal;
+)
+
+// whitespace
+// both of the following statements are syntactically valid
+
+4.squared+2;
+4 . squared + 2;
+
+// search docs with cmd + d, search implementations with cmd + i
+// .browse method calls class browser, useful for seeing methods and args relevant to the given class
+Integer.browse;
+
