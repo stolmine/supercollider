@@ -51,4 +51,5 @@ f = {|freq = 300, amp = 0.1|
 
 x = f.play;
 x.set(\freq, 400, \amp, 0.3); //change the sound
-f.set(\freq, 400, \amp, 0.05); 
+f.set(\freq, 400, \amp, 0.05); // no effect if applied to the function
+
