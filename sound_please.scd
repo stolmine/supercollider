@@ -53,3 +53,26 @@ x = f.play;
 x.set(\freq, 400, \amp, 0.3); //change the sound
 f.set(\freq, 400, \amp, 0.05); // no effect if applied to the function
 
+// we can use a nested variable structure to distinguish our UGen function from our playback function, and then use playbackVariable.release(time in seconds); to gradually fade our UGen playback out to silence
+
+(
+f = {|freq = 300, amp = 0.1|
+	SinOsc.ar(freq, mul: amp)!2;
+};
+)
+x = f.play;
+x.release(2);
+
+// we can use math to manipulate signal operations, like addition for mixing. our sig variable can be expressed a literal combination of two UGens, then we can use multichannel expansion to spread two copies in the stereo field
+
+(
+f = {
+	var sig;
+	sig = SinOsc.ar(300, mul: 0.15);
+	sig = sig + PinkNoise.ar(mul: 0.1);
+	sig = sig!2;
+};
+)
+
+x = f.play;
+x.release(4);
