@@ -124,6 +124,7 @@ x.release(2);
 x = {
 	var sig, lfo; // we can declare several variables at once
 	lfo = SinOsc.kr(freq: 1/5, phase: 3pi/2, mul: 0.1, add: 0.1); // defining our first control rate UGen!
+	/* I am trying to understand how the signal scaling works with mul and add here: the UGen must be bipolar, add is an offset, scales the signal to within 0.1 of that offset in either direction, resulting in an overall throw of modulation from 0.0 to 0.2 */
 	sig = PinkNoise.ar * lfo; // the * operator stands in for mult, essentially a VCA!
 	sig = sig!2; // MC expansion as usual
 };
@@ -131,6 +132,24 @@ x = {
 
 y = x.play;
 y.release(10); // finally we wrap the function var in a new interpreter variable (these do not have to be declared) to play and release
+
+
+// instead of using mul and add to scale and offset our signal we can simply pass the .range method to a UGen and scale it to an arbitrary min and max
+//CE 2.13, described above!
+
+(
+x = {
+	var sig,lfo;
+	lfo = SinOsc.kr(freq: 0.2, phase: 3pi/2).range(0, 0.2); // same result as using mul and add, much easier to conceptualize
+	sig = PinkNoise.ar * lfo;
+	sig = sig!2;
+}.play;
+)
+
+x.release(2);
+
+
+
 
 
 
