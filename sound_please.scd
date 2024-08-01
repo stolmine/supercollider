@@ -76,3 +76,32 @@ f = {
 
 x = f.play;
 x.release(4);
+
+// CE 2.7 overriding arg values when calling play on a UGen function
+
+(
+f = {|freq = 300, amp = 0.1|
+	SinOsc.ar(freq, mul:amp)!2;
+};
+)
+
+x = f.play(args: [freq:800, amp: 0.2]); // overide default args when calling .play method
+
+x.set(\freq, 600, \amp, 0.05); // set messages work normally
+
+// section 2.4.3 stopping sounds
+// CE 2.8
+(
+f = {|freq = 300, amp = 0.1|
+	SinOsc.ar(freq, mul: amp)!2;
+};
+)
+
+x = f.play(args: [freq: 350]);
+y = f.play(args: [freq: 450]);
+y.free;
+x.free;
+
+// free produces a hard stop, we can use release instead for a smooth fade with duration defined in seconds
+
+x.release(3);
