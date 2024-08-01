@@ -105,3 +105,16 @@ x.free;
 // free produces a hard stop, we can use release instead for a smooth fade with duration defined in seconds
 
 x.release(3);
+
+// CE 2.11 - use of binary operators as an alternative to specifying mul and add
+
+(
+x = {
+	var sig; // declare our signal var, something to get used to
+	sig = SinOsc.ar(300)*0.15; // a variable can hold a whole UGen!
+	sig = sig + (PinkNoise.ar*0.1); // and combine them together with simple mathematical operators! this is the equivalent of mixing
+	sig = sig!2; // we then use the multichannel expansion shortcut to send a copy of the signal to each of our first two outputs
+}.play; // we can also just go for }; here and call our UGen function inside of another interpreter var externally
+)
+x.release(2);
+	)
