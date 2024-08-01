@@ -135,7 +135,7 @@ y.release(10); // finally we wrap the function var in a new interpreter variable
 
 
 // instead of using mul and add to scale and offset our signal we can simply pass the .range method to a UGen and scale it to an arbitrary min and max
-//CE 2.13, described above!
+//CE 2.13, described above! one important thing: .range maps linearly between min and max
 
 (
 x = {
@@ -147,6 +147,17 @@ x = {
 )
 
 x.release(2);
+
+/* some range options (table 2.2):
+.range(x,y) - simple, maps linearly between x and y
+.exprange(x,y) - map exponentially between given values, they must be either positive or negative, neither can be 0. not sure why
+.curverange(x,y,n) - very interesting, map between x and y using a warp value of n. n positive produces expo curves, n negative more log
+.unipolar(x) - map between 0 and x
+.bipolar(x) - map the output range between positive and negative x! */
+
+// range mapping assumes you are not using mul and add, use one or the other
+
+
 
 
 
