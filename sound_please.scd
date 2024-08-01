@@ -117,4 +117,39 @@ x = {
 }.play; // we can also just go for }; here and call our UGen function inside of another interpreter var externally
 )
 x.release(2);
-	)
+
+// CE 2.12 - modulating the amplitude of pink noise with a low frequency osc
+
+(
+x = {
+	var sig, lfo; // we can declare several variables at once
+	lfo = SinOsc.kr(freq: 1/5, phase: 3pi/2, mul: 0.1, add: 0.1); // defining our first control rate UGen!
+	sig = PinkNoise.ar * lfo; // the * operator stands in for mult, essentially a VCA!
+	sig = sig!2; // MC expansion as usual
+};
+)
+
+y = x.play;
+y.release(10); // finally we wrap the function var in a new interpreter variable (these do not have to be declared) to play and release
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// white space because I want to type in the middle of my screen instead of the gd bottom
