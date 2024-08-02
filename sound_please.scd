@@ -181,6 +181,18 @@ x.release(2);
 
 // I think I am finally getting the hang of the basic UGen function setup and using variables to contain UGens and to make them available for interaction. Patching!
 
+// CE 2.15 - use of a terminating doneaction to remove a sound process when its eg is complete
+// donaction 2 frees the containing synth automatically
+
+(
+{
+	var sig, env;
+	env = XLine.kr(start: 0.3, end: 0.0001, dur: 0.5, doneAction: 2);
+	sig = SinOsc.ar(350)*env;
+	sig = sig!2;
+}.play;
+)
+
 
 
 
