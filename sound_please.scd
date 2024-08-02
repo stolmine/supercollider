@@ -157,6 +157,34 @@ x.release(2);
 
 // range mapping assumes you are not using mul and add, use one or the other
 
+// section 2.5 - envelopes
+
+// relevant UGens: Line, XLine. These are very basic, either a linear shape moving from x to y, or an expo shape
+// CE 2.14 usage of line and xline as simple amp egs
+
+( // linear EG
+{
+	var sig, env;
+	env = Line.kr(start: 0.3, end: 0, dur: 0.5);
+	sig = SinOsc.ar(350)*env;
+	sig = sig!2;
+}.play;
+)
+( // expo EG, note that we cannot end on 0
+{
+	var sig, env;
+	env = XLine.kr(start: 0.3, end: 0.0001, dur: 0.5);
+	sig = SinOsc.ar(350)*env;
+	sig = sig!2;
+}.play;
+)
+
+// I think I am finally getting the hang of the basic UGen function setup and using variables to contain UGens and to make them available for interaction. Patching!
+
+
+
+
+
 
 
 
