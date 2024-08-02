@@ -211,7 +211,7 @@ e.plot;
 (
 {
 	var sig, env;
-	env = EnvGen.kr( // this is kind of a weird construction, EnvGen plays back Env, which is the UGen actually producing our curve
+	env = EnvGen.kr( // this is kind of a weird construction, EnvGen plays back Env, which is the UGen actually producing our curve. Could be that Env simply produces the curve and EnvGen converts it to audio or control rate signal?
 		envelope: Env.new(
 			levels: [0,1,0],
 			times: [1,3],
