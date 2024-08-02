@@ -215,7 +215,7 @@ e.plot;
 		envelope: Env.new(
 			levels: [0,1,0],
 			times: [1,3],
-			curve: [0,0]
+			curve: [0,0] // positive values cause a segment to be more horizontal at first, and more vertical toward the end, opposite for negative values
 		),
 		doneAction: 2
 	);
@@ -225,8 +225,32 @@ e.plot;
 }.play;
 )
 
+// CE 2.18 - we add a fourth parameter to Env.new, an index into the levels array representing the node at which the EG will sustain. In this case we indicate 2, meaning our sustain node/level will be 0.2, the third index. We also need to add gate as an arg to our function, because it needs to be changed at runtime
+
+(
+f = { |gate = 1|
+	var sig, env;
+	env = EnvGen.kr(
+		envelope: Env.new(
+			[0, 1, 0.2, 0], // 0.2 is our sustain level!
+			[0.02, 0.3, 1],
+			[0, -1, -4],
+			2 // release node index
+		),
+		gate: gate,
+		doneAction: 2
+	);
+	sig = SinOsc.ar(350)*0.3;
+	sig = sig *env;
+	sig = sig!2;
+};
+)
+x = f.play;
+x.set(\gate, 0);
 
 
+Server.default.options.numInputBusChannels=0; // set number of inputs by force
+s.boot; // boot server
 
 
 
