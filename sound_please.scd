@@ -206,7 +206,24 @@ e = Env.new(
 e.plot;
 )
 
+// CE 2.17 - usage of Env and EnvGen to create a custom amplitude envelope signal
 
+(
+{
+	var sig, env;
+	env = EnvGen.kr(
+		envelope: Env.new(
+			levels: [0,1,0],
+			times: [1,3],
+			curve: [0,0]
+		),
+		doneAction: 2
+	);
+	sig = SinOsc.ar(350)*0.3;
+	sig = sig *env;
+	sig = sig!2;
+}.play;
+)
 
 
 
