@@ -193,7 +193,18 @@ x.release(2);
 }.play;
 )
 
+// section 2.5.3 - ENV and ENVGEN
 
+// CE 2.16 - creating and plotting an instance of env
+
+(
+e = Env.new(
+	levels: [0, 1, 0], // level control per stage, the first stage will never repeat
+	times: [2, 6], // always an array of values, should be one index shorter than the number of levels
+	curve: 'lin' // can be an array (curves per stage), a symbol or string (assign same curve to all stages), or an integer (similar to a string or symbol, numbers are assigned to the available cruves)
+);
+e.plot;
+)
 
 
 
