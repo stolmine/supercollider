@@ -250,11 +250,36 @@ x.set(\gate, 0);
 
 
 Server.default.options.numInputBusChannels=0; // set number of inputs by force
-s.boot; // boot server
+s.reboot; // boot server
 
+// a zero to positive gate transition causes the envelope to move from its current level to the second level in the levels array, using its first duration and first curve value. The envelope never revisits its first level, which is used only for initialization.
+// a positive to zero gate transition causes the envelope to move from its current value to the value immediately after the release node, using the duration and curve values at the same index as the release node.
 
+// CE 2.19 - a retriggerable gated envelope
 
+(
+f = {|gate = 1|
+	var sig, env;
+	env = EnvGen.kr(
+		Env.new(
+			[0, 1, 0.2, 0],
+			[0.02, 0.3, 1],
+			[0, -1, -4],
+			2
+		),
+		gate
+	);
+	sig = SinOsc.ar(350)*0.3;
+	sig = sig * env;
+	sig = sig!2;
+};
+)
 
+x = f.play;
+x.set(\gate, 0); // fade to silence but do not free
+x.set(\gate, 1); // reopen the gate to restart the envelope
+x.set(\gate, 0); // fade to silence again
+x.free; // free when finished
 
 
 
