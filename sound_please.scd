@@ -303,7 +303,14 @@ x = {|t_gate = 0|
 x.set(\t_gate, 1); // evaluate repeatedly
 x.free; // free when finished
 
+// section 2.6 - multichannel signals
+// 2.6.1 multichannel expansion
 
+{SinOsc.ar(300, mul: 0.1)}.play; // demonstrating a simple one channel ugen
+
+{SinOsc.ar(300, mul: 0.1)!2}.play; // demonstrating the dup method (symbolically shortcutted via !X) which outputs our two UGen instances on contiguous channels
+
+s.meter; // easy way to call up the server meter!
 
 
 
