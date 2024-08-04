@@ -312,6 +312,11 @@ x.free; // free when finished
 
 s.meter; // easy way to call up the server meter!
 
+// CE 2.21 - step by step depiction of multichannel expansion, an array argument produces an array of UGens
+
+{SinOsc.ar([350, 353]) * 0.2}.play // we call an array inside of the SinOsc's freq arg, which produces two UGen's distributed across our left and right outputs
+
+{[SinOsc.ar(350), SinOsc.ar(353)] * 0.2}.play; // same effect, point taken
 
 
 
