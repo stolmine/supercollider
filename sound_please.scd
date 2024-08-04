@@ -281,6 +281,30 @@ x.set(\gate, 1); // reopen the gate to restart the envelope
 x.set(\gate, 0); // fade to silence again
 x.free; // free when finished
 
+// CE 2.20 - trigger-type args to create retriggerable fixed-duration EG
+
+(
+x = {|t_gate = 0|
+	var sig, env;
+	env = EnvGen.kr(
+		Env.new(
+			[0, 1, 0],
+			[0.02, 0.3],
+			[0, -4],
+		),
+		t_gate,
+	);
+	sig = SinOsc.ar(350)*0.3;
+	sig = sig * env;
+	sig = sig!2;
+}.play;
+)
+
+x.set(\t_gate, 1); // evaluate repeatedly
+x.free; // free when finished
+
+
+
 
 
 
