@@ -357,6 +357,23 @@ rrand(1,9)!8; // produces 8 of the same random number
 
 // this expands our expanded signal and actually just generates a 2 channel output with the UGen array summed and then copied per channel e.g. [[SinOsc + PinkNoise]. [SinOsc + PinkNoise]]
 
+// CE 2.25 - pan2 moving a sound in the stereo field
+
+(
+{
+	var sig, pan;
+	pan = SinOsc.kr(0.5) * 0.8;
+	sig = PinkNoise.ar * 0.2;
+	sig = Pan2.ar(sig, pan); // we use that control rate SinOsc as an LFO here with a freq of 0.5 hz, assign it a variable, then pass the variable as an arg to our Pan2 UGen. The first arg is our input, PinkNoise held in var sig. Pan2 should always receive a single channel of signal, otherwise you produce an array of arrays
+}.play;
+)
+
+
+
+
+
+
+
 
 
 
