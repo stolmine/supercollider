@@ -368,6 +368,27 @@ rrand(1,9)!8; // produces 8 of the same random number
 }.play;
 )
 
+// CE 2.26 - attempting to play a 50 channel signal, only 2 channels will be heard
+
+(
+{
+	var sig, freq;
+	freq = {exprand(200, 2000)} ! 50;
+	sig = SinOsc.ar(freq) * 0.1;
+}.play;
+)
+
+// CE 2.27 - we can use splay to mix these 50 channels down to our intended two
+
+(
+{
+	var sig, freq;
+	freq = {exprand(200, 2000)}!50;
+	sig = SinOsc.ar(freq)*0.1;
+	sig = Splay.ar(sig); // Splays first arg is an input array, in this case we have effectively expanded sig into a 50 index array via MCE on the freq arg/variable
+}.play;
+)
+
 
 
 
