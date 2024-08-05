@@ -318,7 +318,17 @@ s.meter; // easy way to call up the server meter!
 
 {[SinOsc.ar(350), SinOsc.ar(353)] * 0.2}.play; // same effect, point taken
 
+// Code example 2.22 - multichannel expanded UGen arrays with modulation
 
+(
+{
+	var sig, mod;
+	sig = SinOsc.ar([450, 800]);
+	mod = SinOsc.kr([0.2, 9]).range(0,1);
+	sig = sig * mod; // we are modulating amplitude here? I believe that's the case'
+	sig = sig * 0.2;
+}.play;
+)
 
 
 
