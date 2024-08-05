@@ -323,12 +323,23 @@ s.meter; // easy way to call up the server meter!
 (
 {
 	var sig, mod;
-	sig = SinOsc.ar([450, 800]);
+	sig = SinOsc.ar([450, 800]); // when applying MC expansion we can dupe an arg or the whole UGen. However, with stochastic UGens like noise, we need to dupe args in order to produce different signals per output channel, duping the whole UGen will result in copies of the same signal being produced at each successive output
 	mod = SinOsc.kr([0.2, 9]).range(0,1);
 	sig = sig * mod; // we are modulating amplitude here? I believe that's the case'
 	sig = sig * 0.2;
 }.play;
 )
+
+// CE 2.23 - duping UGen vs duping UGen arg for stochastic signals
+
+// these will produce the same signal across both outputs
+{SinOsc.ar(300!2, mul:0.1)}.play;
+{SinOsc.ar(300, mul: 0.1)!2}.play;
+
+// these will produce multiple distinct signals
+{PinkNoise.ar(mul:0.2)!2}.play; // 'point' source between speakers (close stereo image)
+{PinkNoise.ar(mul: 0.2 ! 2)}.play; // 'wide' source between the speakers
+
 
 
 
