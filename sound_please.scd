@@ -389,7 +389,24 @@ rrand(1,9)!8; // produces 8 of the same random number
 }.play;
 )
 
-
+// attempting to build a lil MCE synth, we generate 50 sinusoids and envelope each of their VCAs with a unique timing defined by the attack and release vars
+(
+{
+	var sig, freq, env, attack, release;
+	freq = {exprand(200, 3500)}!50;
+	env = EnvGen.kr(
+		Env.new(
+			attack = {exprand(0.0001,2)}!50;
+			release = {exprand(0.001,5)}!50;
+			[0,0.1,0],
+			[attack, release],
+			'lin'
+		);
+	);
+	sig = SinOsc.ar(freq) * env;
+	sig = Splay.ar(sig);
+}.play;
+)
 
 
 
