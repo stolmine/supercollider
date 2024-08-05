@@ -340,9 +340,22 @@ s.meter; // easy way to call up the server meter!
 {PinkNoise.ar(mul:0.2)!2}.play; // 'point' source between speakers (close stereo image)
 {PinkNoise.ar(mul: 0.2 ! 2)}.play; // 'wide' source between the speakers
 
+// an aside, this behavior is essentially due to the nature of functions and *where we tell SC to perform MCE*
+rrand(1,9)!8; // produces 8 of the same random number
+{rrand(1,9)}!8; // eight differet numbers, this is because we are duplicating the function containing rrand and not running the rrand and then duplicating the output itself
 
+// CE 2.24 - common mistake of applying MCE to an already expanded signal
 
+(
+{
+	var sig;
+	sig = [SinOsc.ar(300), PinkNoise.ar];
+	sig = sig * 0.1;
+	sig = sig!2;
+}.play;
+)
 
+// this expands our expanded signal and actually just generates a 2 channel output with the UGen array summed and then copied per channel e.g. [[SinOsc + PinkNoise]. [SinOsc + PinkNoise]]
 
 
 
