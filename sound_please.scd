@@ -466,7 +466,10 @@ x.set(\freq, 450);
 x.set(\amp, 0.5);
 x.set(\gate, 0, \rel, 3);
 
+// CE 2.32 - a synth with custom initial arg values
 
+x = Synth(\test, [freq: 800, amp: 0.1, atk: 4, slev: 1]);
+x.set(\gate, 0);
 
 
 
