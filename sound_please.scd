@@ -398,7 +398,7 @@ rrand(1,9)!8; // produces 8 of the same random number
 		Env.new(
 			attack = {exprand(0.0001,2)}!50;
 			release = {exprand(0.001,5)}!50;
-			[0,0.1,0],
+			[0,0.2,0],
 			[attack, release],
 			'lin'
 		);
@@ -407,6 +407,49 @@ rrand(1,9)!8; // produces 8 of the same random number
 	sig = Splay.ar(sig);
 }.play;
 )
+
+// section 2.7 - synth and synthdef
+// CE 2.28 - UGen fucntion conversion to synthdef, the following is a simple function-dot-play construction
+
+(
+x = {
+	var sig;
+	sig = SinOsc.ar([350, 353]);
+	sig = sig*0.2;
+}.play;
+)
+
+x.free;
+
+// a synthdef construction is a pretty simple conversion here, we simply call the SynthDef class, provide a name for the following UGen function, specify the output signal and destination, and then add the synthdef by evaluating the code
+
+// CE 2.29 - converting CE 2.28 into a SynthDef
+
+(
+SynthDef(\test, { // we add our name as a symbol
+	var sig;
+	sig = SinOsc.ar([350,353]);
+	sig = sig * 0.2;
+	Out.ar(0, sig); // here we direct the signal to an output using the Out UGen arguments being destination bus and channel array (our signal defined via the UGen graph var sig)
+}).add;
+)
+
+// NB: there can only be one SynthDef added with a given name, unique synthdefs require unique names. If we call a SynthDef more than once, each new instance replaces the previous one.
+
+// 2.7.2 - creating a synth
+// CE 2.30 - creatinga nd freeing a synth from an added SynthDef
+
+x = Synth(\test); // case matters! I tried calling 'synth' instead of 'Synth' and got an error for an undefined object
+x.free;
+
+
+
+
+
+
+
+
+
 
 
 
