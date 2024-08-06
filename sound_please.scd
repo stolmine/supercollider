@@ -475,13 +475,39 @@ x.set(\gate, 0);
 
 (
 // return an array of four Synths, assigned to variable x
-x = [205, 310, 525, 700].collect({|f| // we use colelct here to produce an array tied to variable f? not sure i understand this construction
+x = [205, 310, 525, 700].collect({|f| // we use collect here to produce an array tied to variable f? not sure i understand this construction
 	Synth.new(\test, [\freq, f, \amp, 0.1]); // call our synths, the use of f as the freq arg produces an array of four synths with frequencies corresponding to our specified values
 });
 )
 
 // fade out each synth
 x.do({|n| n.set(\gate, 0, \rel, 5)}); // what is happening here? x.do allows us to iterate over each of our 4 synths, i think. n defines our function that is iterated over the indices in the collection
+
+// CE 2.34 - freq and amp conversion
+
+(
+SynthDef.new(\test, {
+	arg freq = 350, amp = 0.2, atk = 0.01, dec = 0.3, slev = 0.4, rel = 1, gate = 1, out = 0;
+	var sig, env;
+	env = EnvGen.kr(
+		Env.adsr(atk, dec, slev, rel),
+		gate,
+		doneAction: 2
+	);
+	sig = SinOsc.ar(freq + [0, 1]);
+	sig = sig * env;
+	sig = sig * amp;
+	Out.ar(out, sig);
+}).add;
+)
+
+x = Synth(\test, [freq: 60.midicps, amp: -20.dbamp]);
+x.set(\freq, 62.midicps); // increase pitch by two semitones
+x.set(\amp, -12.dbamp); // increase level by 8 db
+x.set(\gate, 0);
+
+
+
 
 
 
