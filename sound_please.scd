@@ -440,9 +440,31 @@ SynthDef(\test, { // we add our name as a symbol
 // CE 2.30 - creatinga nd freeing a synth from an added SynthDef
 
 x = Synth(\test); // case matters! I tried calling 'synth' instead of 'Synth' and got an error for an undefined object
-x.free;
+x.free; // we cannot use the release method with a SynthDef without specifying exactly a gated envelope, likewise for Out, we need to specify or else we will hear nothing
 
+// CE 2.31 - creating a SynthDef with arguments, so we can control its characteristics each time we play it
+// we use the arg portion of the synthedef to define variable which can be called later in the recipe and modified while the SynthDef is added and playing via the .set lines below.
 
+(
+SynthDef.new(\test, {
+	arg freq = 350, amp = 0.2, atk = 0.01, dec = 0.3, slev = 0.4, rel = 1, gate = 1, out = 0;
+	var sig, env;
+	env = EnvGen.kr(
+		Env.adsr(atk, dec, slev, rel),
+		gate,
+		doneAction: 2
+	);
+	sig = SinOsc.ar(freq + [0, 1]);
+	sig = sig * env;
+	sig = sig * amp;
+	Out.ar(out, sig);
+}).add;
+)
+
+x = Synth(\test);
+x.set(\freq, 450);
+x.set(\amp, 0.5);
+x.set(\gate, 0, \rel, 3);
 
 
 
