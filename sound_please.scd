@@ -506,7 +506,32 @@ x.set(\freq, 62.midicps); // increase pitch by two semitones
 x.set(\amp, -12.dbamp); // increase level by 8 db
 x.set(\gate, 0);
 
+// section 2.9 - helpful server tools
 
+// CE 2.35 - polling a UGen
+
+(
+x = {
+	var sig, freq;
+	freq = SinOsc.kr(0.2).exprange(200, 800).poll(20); // we should rarely use a vaule greater than 20 for .poll, large numbers may hang the application
+	sig = SinOsc.ar(freq);
+	sig = sig * 0.2;
+	sig = sig ! 2;
+}.play;
+)
+
+// server tools
+FreqScope.new;
+s.scope;
+s.volume.gui;
+s.makeGui;
+s.plotTree;
+
+// CE 2.36 - plotting UGen functions
+
+{SinOsc.ar(110)}.plot(0.05); // 0.05 seconds of the given UGen's output
+
+{SinOsc.ar([110, 220, 330, 440])}.plot(0.05); // multichannel plot, useful!
 
 
 
