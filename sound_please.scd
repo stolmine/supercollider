@@ -471,8 +471,17 @@ x.set(\gate, 0, \rel, 3);
 x = Synth(\test, [freq: 800, amp: 0.1, atk: 4, slev: 1]);
 x.set(\gate, 0);
 
+// CE 2.33 - expressions to produce a tone cluster, and then fade it out
 
+(
+// return an array of four Synths, assigned to variable x
+x = [205, 310, 525, 700].collect({|f| // we use colelct here to produce an array tied to variable f? not sure i understand this construction
+	Synth.new(\test, [\freq, f, \amp, 0.1]); // call our synths, the use of f as the freq arg produces an array of four synths with frequencies corresponding to our specified values
+});
+)
 
+// fade out each synth
+x.do({|n| n.set(\gate, 0, \rel, 5)}); // what is happening here? x.do allows us to iterate over each of our 4 synths, i think. n defines our function that is iterated over the indices in the collection
 
 
 
