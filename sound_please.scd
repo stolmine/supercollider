@@ -658,9 +658,19 @@ sig = LeakDC.ar(sig); // apply DC offset filtering to a given signal
 )
 
 s.scope;
+s.sampleRate(44100);
 
+// CE 3.9 - ring modulation (bipolar AM)
 
-
+(
+{
+	var sig, mod, modHz;
+	modHz = XLine.kr(1, 150, 10);
+	mod = SinOsc.ar(modHz).range(-1,1);
+	sig = SinOsc.ar(750, mul: mod);
+	sig = sig * 0.2 ! 2;
+}.play;
+)
 
 
 
