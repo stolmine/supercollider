@@ -540,22 +540,26 @@ s.plotTree;
 	sig = SinOsc.ar(200, mul:0.2);
 	sig = sig + SinOsc.ar(400, mul: 0.1);
 	sig = sig + SinOsc.ar(600, mul: 0.05);
-	sig = sig + SinOsc.ar(800, mul: 0.025);
+	sig = sig + SinOsc.ar(800, mul: 0.025); // we manually add partials by mixing additively to the sig var
 	sig = sig!2;
 }.play;
 )
 
+// CE 3.2 - using .do to iterate additive partials
 
+(
+{
+	var sig = 0, freqs = [200, 400, 600, 800];
+	freqs.do({ |f, i| // ok, now i get .do, it's something like loop in TT. you call the method on a collection (like an array), define your arguments (f and i in this case), and then it iterates the function following with sequentially re the input collection. Not sure why the mul postln is returning whole numbers here but i am probably just applying in the wrong spot: this is the case, you need to encapsulate the whole mul arg, as the postln method was only addressing 2.pow(i)
+		sig = sig + SinOsc.ar(f, mul: (0.2 / 2.pow(i)).postln);
+	});
+	sig = sig!2;
+}.play;
+)
 
+// i did misunderstand .do above. the names of the arguments stand for 'freqs' and 'index', so we are taking the freqs to MCE our UGen, and then appling 0.2 / 2 to the power of each index to define amplitude for each.
 
-
-
-
-
-
-
-
-
+2.pow(0); // anything to the power of 0 will evaluate to 1
 
 
 

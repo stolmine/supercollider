@@ -78,3 +78,30 @@ ceil(4.3);
 
 Symbol.browse;
 
+// CE 1.28 - .do for iteration
+
+[30, 40, 50, 60].do({"this is a test".postln})
+
+4.do({"this is a test".postln});
+
+[30, 40, 50, 60].do({|item, index| [item, index].postln});
+
+// for .do and .collect we can declare two optional arguments at the beginning of our function, representing each item in the collection and its index per iteration. By declaring these args we can expose the items in the collection and their places in it.
+
+// CE 1.29 - collect
+
+x = [30, 40, 50, 60].collect({|item, index| item * index});
+
+// .collect returns the array [0, 40, 100, 180] here
+
+// collect allows us to return a modified array instead of simply doing a function using the array repeatedly.
+
+
+
+
+
+
+
+
+
+
