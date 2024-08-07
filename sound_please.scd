@@ -645,7 +645,19 @@ sig = Limiter.ar(sig); // apply a limiter with a default normalized output level
 sig = LeakDC.ar(sig); // apply DC offset filtering to a given signal
 // both of these UGens can be applied liberally to any dubious code to ensure some audiitary safety
 
+// CE 3.8 - amp modulation synthesis
 
+(
+{
+	var sig, mod, modHz;
+	modHz = XLine.kr(1, 150, 10); // defines this var as an exponential curve with duration of 10 seconds
+	mod = SinOsc.ar(modHz).range(0, 1);
+	sig = SinOsc.ar(750, mul: mod);
+	sig = sig * 0.2!2;
+}.play;
+)
+
+s.scope;
 
 
 
