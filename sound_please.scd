@@ -533,6 +533,18 @@ s.plotTree;
 
 {SinOsc.ar([110, 220, 330, 440])}.plot(0.05); // multichannel plot, useful!
 
+// CE 3.1 - summing sines for additive synthesis
+(
+{
+	var sig;
+	sig = SinOsc.ar(200, mul:0.2);
+	sig = sig + SinOsc.ar(400, mul: 0.1);
+	sig = sig + SinOsc.ar(600, mul: 0.05);
+	sig = sig + SinOsc.ar(800, mul: 0.025);
+	sig = sig!2;
+}.play;
+)
+
 
 
 
