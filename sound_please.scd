@@ -559,7 +559,27 @@ s.plotTree;
 
 // i did misunderstand .do above. the names of the arguments stand for 'freqs' and 'index', so we are taking the freqs to MCE our UGen, and then appling 0.2 / 2 to the power of each index to define amplitude for each.
 
-2.pow(0); // anything to the power of 0 will evaluate to 1
+2.pow(0); // any non zero number to the power of 0 will evaluate to 1
+
+// CE 3.3 - using collect to iterate our additive signal
+
+(
+{
+	var sig, freqs = [200, 400, 600, 800];
+	sig = freqs.collect({ |f, i|
+		SinOsc.ar(f, mul: 0.2 / 2.pow(i));
+	});
+	sig = sig.sum;
+	sig = sig!2;
+}.play;
+)
+
+// .collect is the cleanest option here because it returns a new collection of UGens, each with a frequency defined by f. then we simply call sum on the collection to mix them together, freqs and amps have already been handled as necessary
+
+// using .do necessitates explicitly summing each successive UGen produced by iteration inside of its function, as it will not alter the contents of our initial collection
+
+
+
 
 
 
