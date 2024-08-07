@@ -604,11 +604,31 @@ s.scope;
 			Array.exprand(40, 50, 8000),
 			Array.exprand(40, 0.001, 0.05).sort.reverse,
 			Array.rand(40, 0, 2pi)
-		] // we create 3 arrays for freqs, amps, and phase via UGens instead of manually. the .exprand method fills each array with values according to the given arguments: zie, minVal, maxVal. We can then sort, reverse, etc those values to manipulate the distribution of our harmonics
+		] // we create 3 arrays for freqs, amps, and phase via UGens instead of manually. the .exprand method fills each array with values according to the given arguments: size, minVal, maxVal. We can then sort, reverse, etc those values to manipulate the distribution of our harmonics
 	);
 	sig = sig!2;
 }.play;
 )
+
+// CE 3.6 additive synth using DynKlang
+
+(
+{
+	var sig, freqs, amps, phases;
+	freqs = Array.exprand(40, 50, 8000).sort;
+	amps = Array.exprand(40, 0.005, 0.2).sort.reverse;
+	phases = Array.rand(40, 0, 2pi); // got an error here originally because i used a 0 minVal
+	sig = DynKlang.ar(`[ // backtick to indicate an ArrayRef
+		freqs * LFNoise1.kr(0.02!40).exprange(0.25, 2),
+		amps * LFNoise1.kr(1!40).exprange(0.02, 1),
+		phases
+	]);
+	sig = sig!2;
+}.play;
+)
+
+
+
 
 
 
