@@ -627,6 +627,28 @@ s.scope;
 }.play;
 )
 
+// Section 3.3 - modulation synthesis, or supplying UGens as input values for other UGens
+
+// CE 3.7 - subtractive modulation synthesis, using an LFO to modulate the cutoff of an LPF
+
+(
+	{
+		var sig, mod;
+	mod = SinOsc.kr(0.25, 3pi/2).range(0, 3000); // at such a low frequency it's probably more efficient to use control rate rather than audio, but either will do. There is no audible difference. Sines are favored for modulation purposes as they work predictably when frequency approaches 0 or a negative number. Other waveforms may produce very strange or extremely loud results.
+		sig = Pulse.ar([90,91]);
+		sig = LPF.ar(sig, 200 + mod); // applying a lowpass is simple, we define it as the value of sig and also pass sig in as its input, other args include freq, mul, and add for cutoff and scaling purposes
+		sig = sig * 0.1;
+	}.play
+)
+
+sig = Limiter.ar(sig); // apply a limiter with a default normalized output level of 1 to a given signal
+sig = LeakDC.ar(sig); // apply DC offset filtering to a given signal
+// both of these UGens can be applied liberally to any dubious code to ensure some audiitary safety
+
+
+
+
+
 
 
 
