@@ -672,6 +672,21 @@ s.sampleRate(44100);
 }.play;
 )
 
+// CE 3.10 - differenecs in audio quality between audio and control rate modulators
+
+(
+{
+	var sig, mod;
+	mod = SinOsc.kr(1050).range(0,1); // switch ar and kr here to hear differences in output. kr produces stepped modulation.
+	sig = SinOsc.ar(750);
+	sig = sig * mod * 0.2 ! 2;
+}.play;
+)
+
+
+
+
+
 
 
 
