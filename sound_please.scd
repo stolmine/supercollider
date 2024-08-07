@@ -578,6 +578,38 @@ s.plotTree;
 
 // using .do necessitates explicitly summing each successive UGen produced by iteration inside of its function, as it will not alter the contents of our initial collection
 
+// section 3.2.2 - additive UGens
+
+// CE 3.4 - Blip
+
+(
+{
+	var sig, harm;
+	harm = LFTri.kr(0.1,3).range(1,50);
+	sig = Blip.ar([80,81], harm); // we are unable to control the amplitude of individual harmonics, just frequency and number. we use MCE to generate a stereo image across two close fundamentals, and then define the number of harmonics via the harm variable which is a range limited triangle LFO
+	sig = sig * 0.1;
+}.play;
+)
+
+s.plotTree;
+s.scope;
+
+// CE 3.5 - Klang for additive synthesis
+
+(
+{
+	var sig;
+	sig = Klang.ar(
+		`[ // <- backtick used to delineate our ref array
+			Array.exprand(40, 50, 8000),
+			Array.exprand(40, 0.001, 0.05).sort.reverse,
+			Array.rand(40, 0, 2pi)
+		] // we create 3 arrays for freqs, amps, and phase via UGens instead of manually. the .exprand method fills each array with values according to the given arguments: zie, minVal, maxVal. We can then sort, reverse, etc those values to manipulate the distribution of our harmonics
+	);
+	sig = sig!2;
+}.play;
+)
+
 
 
 
