@@ -697,7 +697,27 @@ s.sampleRate(44100);
 
 FreqScope.new;
 
+// CE 3.12 - FM modulators in series and parallel
 
+(
+{
+	var sig, mod1, mod2;
+	mod2 = SinOsc.ar(0.2, mul: 450);
+	mod1 = SinOsc.ar(500 + mod2, mul:800); // we use mod2 to offset the frequency of mod1 here, a serial configuration
+	sig = SinOsc.ar(1000 + mod1);
+	sig = sig * 0.2 ! 2;
+}.play;
+)
+
+(
+{
+	var sig, mod1, mod2;
+	mod2 = SinOsc.ar(0.2, mul: 450);
+	mod1 = SinOsc.ar(500, mul:800);
+	sig = SinOsc.ar(1000 + mod1 + mod2); // this is a parellel construction, we offset the carrier with both mod1 and mod2 'independently'
+	sig = sig * 0.2 ! 2;
+}.play;
+)
 
 
 
