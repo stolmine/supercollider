@@ -741,7 +741,17 @@ FreqScope.new;
 }.play;
 )
 
+// CE 3.14 - aliasing vs non aliasing UGens
+// some UGens come in LF and non LF pairs, some have only an LF version (LFTri) or a non LF version (SinOsc). LF UGens are designed to run at low frequencies and are intended as modulators; they are not antialiased and so produce precise representations of their shapes throughout the audible spectrum but can alias and produce unintended harmonics and fluttering at higher frequencies
 
+(
+{
+	var sig, freq;
+	freq = XLine.kr(20, 8000, 10, doneAction: 2);
+	sig = LFPulse.ar(freq); // replace with LFPulse to notice the difference
+	sig = sig * 0.2!2;
+}.play
+)
 
 
 
