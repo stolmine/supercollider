@@ -824,8 +824,23 @@ b = Buffer.loadCollection(s, ~wt.asWavetableNoWrap);
 
 b.free;
 
+// section 3.5 - filters and subtractive synthesis
 
+// CE 3.19 - various examples of noise functions
 
+{WhiteNoise.ar(0.1 ! 2)}.play;
+{PinkNoise.ar(0.1 ! 2)}.play;
+{BrownNoise.ar(0.1 ! 2)}.play;
+
+// CE 3.20 - LFNoise0 - sample and hold/stepped random
+
+(
+{
+	var sig, freq;
+	freq = LFNoise0.kr(8).exprange(150, 2000);
+	sig = SinOsc.ar(freq) * 0.2!2;
+}.play;
+)
 
 
 
