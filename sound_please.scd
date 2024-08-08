@@ -753,14 +753,54 @@ FreqScope.new;
 }.play
 )
 
+// 3.4.1 - wavetables; creating and playing
 
+// CE 3.15 - wavetable creation and reading via Osc
 
+(
+~wt = Signal.sineFill(8192, [1], [0]).asWavetable;
+b = Buffer.loadCollection(s, ~wt);
+)
+{Osc.ar(b, 200)*0.2!2}.play;
+b.free;
 
+// 3.4.2 - blended wavetables
 
+// CE 3.16 - multiple wavetables, stored in consecutive buffers
 
+(
+b = Buffer.allocConsecutive(4, s, 16384);
+~wt = [
+	Signal.sineFill(8192, 1 ! 4, 0 ! 4),
+	Signal.sineFill(8192, 1 / (1..50), 0!50),
+	Signal.sineFill(
+		8192,
+		[1 / (1, 3..50), 0!25].lace(50),
+		0 ! 50
+	),
+	Signal.sineFill(
+		8192,
+		Array.exprand(50, 0.001, 1).sort.reverse,
+		{rrand(0, 2pi)} ! 50
+	),
+];
+b.do({ |buf, i| buf.loadCollection(~wt[i].asWavetable) });
+)
 
+~wt.plot; // optional visualization
 
+// CE 3.17 - wavetable morphing
 
+(
+{
+	var sig, bufmod;
+	bufmod = SinOsc.kr(0.05, 3pi/2).unipolar(2.999);
+	sig = VOsc.ar(b[0].bufnum + bufmod, 200);
+	sig = sig *0.1!2;
+}.play;
+)
+
+s.scope;
 
 
 
