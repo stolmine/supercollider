@@ -677,11 +677,26 @@ s.sampleRate(44100);
 (
 {
 	var sig, mod;
-	mod = SinOsc.kr(1050).range(0,1); // switch ar and kr here to hear differences in output. kr produces stepped modulation.
+	mod = SinOsc.kr(1050).range(0,1); // switch ar and kr here to hear differences in output. kr produces stepped modulation. Accd to feldsteel we typically want to use ar modulators despite the modest cost in computational efficiency
 	sig = SinOsc.ar(750);
 	sig = sig * mod * 0.2 ! 2;
 }.play;
 )
+
+// CE 3.11 - simple FM
+
+(
+{
+	var sig, mod, modHz;
+	modHz = XLine.kr(1, 150, 10);
+	mod = SinOsc.ar(modHz, mul: 300);
+	sig = SinOsc.ar(750 + mod);
+	sig = sig * 0.2 ! 2;
+}.play;
+)
+
+FreqScope.new;
+
 
 
 
