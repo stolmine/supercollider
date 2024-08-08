@@ -719,6 +719,32 @@ FreqScope.new;
 }.play;
 )
 
+// 3.3.3 additional modulation ideas
+
+// CE 3.13 - pulse width modulation
+
+(
+{
+	var sig, mod;
+	mod = LFTri.ar(0.3).range(0.1,0.95);
+	sig = Pulse.ar(100, width: mod); // modulating the Pulse's width parameter with LFTri assigned to mod and a normalized range method
+	sig = sig * 0.2!2;
+}.play;
+)
+
+(
+{
+	var sig, mod;
+	mod = LFTri.ar(0.3).range(0,1);
+	sig = VarSaw.ar(200, width: mod); // modulating the saw's width param morphs the shape from saw to triangle
+	sig = sig * 0.2!2;
+}.play;
+)
+
+
+
+
+
 
 
 
