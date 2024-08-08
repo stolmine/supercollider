@@ -789,7 +789,7 @@ b.do({ |buf, i| buf.loadCollection(~wt[i].asWavetable) });
 
 ~wt.plot; // optional visualization
 
-// CE 3.17 - wavetable morphing
+// CE 3.17 - wavetable morphing, we assume 3.16 has already been executed
 
 (
 {
@@ -801,6 +801,33 @@ b.do({ |buf, i| buf.loadCollection(~wt[i].asWavetable) });
 )
 
 s.scope;
+
+// there is so much happening here, need to come back and break it down
+
+// CE 3.18 - waveshaping with an S-curve transfer function derived from Env
+
+(
+~wt = Env.new([-1, 0, 1], [1, 1], [4, 4]).asSignal(8193);
+b = Buffer.loadCollection(s, ~wt.asWavetableNoWrap);
+)
+
+~wt.plot;
+
+(
+{
+	var sig, index;
+	index = SinOsc.ar(200);
+	sig = Shaper.ar(b, index);
+	sig = sig *0.2!2;
+}.play;
+)
+
+b.free;
+
+
+
+
+
 
 
 
