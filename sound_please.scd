@@ -860,12 +860,18 @@ b.free;
 
 (
 {
-	var sig, cutoff;
-	cutoff = LFTri.kr(0.1, 3).exprange(100, 10000);
+	var sig, cutoff, fmod;
+	fmod = LFNoise2.kr(0.1, 1).exprange(0.01, 0.2);
+	cutoff = LFTri.kr(fmod, 3).exprange(100, 7500);
 	sig = PinkNoise.ar(1);
+	sig = sig + SinOsc.ar([350, 705, 1410], mul: 0.1);
 	sig = LPF.ar(sig, cutoff) * 0.25 ! 2; // replace with HPF
 }.play;
 )
+
+s.scope;
+s.reboot;
+FreqScope.new;
 
 (
 {
