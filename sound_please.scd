@@ -856,11 +856,37 @@ b.free;
 
 {LFDNoise3.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
 
+// CE 3.22 - basic filter UGens processing pink noise
 
+(
+{
+	var sig, cutoff;
+	cutoff = LFTri.kr(0.1, 3).exprange(100, 10000);
+	sig = PinkNoise.ar(1);
+	sig = LPF.ar(sig, cutoff) * 0.25 ! 2; // replace with HPF
+}.play;
+)
 
+(
+{
+	var sig, cutoff;
+	cutoff = LFTri.kr(0.1, 3).exprange(100, 10000);
+	sig = PinkNoise.ar(1);
+	sig = HPF.ar(sig, cutoff) * 0.25 ! 2;
+}.play;
+)
 
+(
+{
+	var sig, cutoff, rq;
+	cutoff = LFTri.kr(0.1, 3).exprange(100, 10000);
+	rq = MouseY.kr(0.1, 1, 1).clip(0.1, 1);
+	sig = PinkNoise.ar(1);
+	sig - BPF.ar(sig, cutoff, rq) * 0.25 ! 2; // replace with BPRF
+}.play;
+)
 
-
+FreqScope.new;
 
 
 // white space because I want to type in the middle of my screen instead of the gd bottom
