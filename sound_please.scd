@@ -842,8 +842,19 @@ b.free;
 }.play;
 )
 
+// CE 3.21 - non dynamic vs dynamic LF noise gens
 
+{LFNoise0.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
 
+{LFNoise1.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
+
+{LFNoise2.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
+
+{LFDNoise0.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
+
+{LFDNoise1.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
+
+{LFDNoise3.ar(XLine.kr(100, s.sampleRate, 8)) * 0.1 ! 2}.play;
 
 
 
