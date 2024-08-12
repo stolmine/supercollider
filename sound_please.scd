@@ -894,5 +894,29 @@ FreqScope.new;
 
 FreqScope.new;
 
+// CE 3.33 - amplitude compensation for filtering
+
+(
+{
+	var sig, cutoff, rq;
+	cutoff = LFTri.kr(0.1, 3).exprange(100, 10000);
+	rq = MouseY.kr(0.01, 1, 1).clip(0.01, 1);
+	sig = PinkNoise.ar(1);
+	sig = BPF.ar(sig, cutoff, rq, mul: 1 / rq.sqrt) * 0.5 ! 2; // using a mul value of the reciprocal of the square root of our resonance to compensate for gain reduction
+}.play;
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // white space because I want to type in the middle of my screen instead of the gd bottom
