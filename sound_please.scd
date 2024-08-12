@@ -917,6 +917,20 @@ FreqScope.new;
 }.play;
 )
 
+// CE 3.25 - modulating a resonant lpf
+
+(
+{
+	var sig, cutoff, freq;
+	freq = LFNoise0.kr(1).range(25, 49).round(1).midicps;
+	cutoff = VarSaw.kr(6, width: 0.1).exprange(50, 10000);
+	sig = Pulse.ar(freq * [0.99, 1.01]);
+	sig = RLPF.ar(sig, cutoff, 0.1);
+	sig = sig * 0.1;
+}.play;
+)
+
+
 
 
 
