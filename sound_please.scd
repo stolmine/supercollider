@@ -906,6 +906,17 @@ FreqScope.new;
 }.play;
 )
 
+// CE 3.24 - iteration to apply copies of filters in series
+
+(
+{
+	var sig;
+	sig = WhiteNoise.ar(1 ! 2);
+	2.do({sig = LPF.ar(sig, 1000)});
+	sig = sig * 0.25;
+}.play;
+)
+
 
 
 
