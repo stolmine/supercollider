@@ -77,9 +77,24 @@ r = Routine(f);
 )
 r.play;
 
+// CE 5.5 - iteraion inside of routine for repetition
 
-
-
+(
+~playTone = { |freq|
+	{SinOsc.ar(freq ! 2) * Line.kr(0.1, 0, 1, 2)}.play;
+};
+f = {
+	3.do({
+		~playTone.(72.midicps);
+		0.2.yield;
+		~playTone.(62.midicps);
+		0.4.yield;
+	});
+};
+r = Routine(f);
+)
+r.play;
+r.reset;
 
 
 
