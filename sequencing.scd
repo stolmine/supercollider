@@ -40,8 +40,23 @@ r = Routine(f);
 
 r.next;
 r.reset;
+f.value;
 
+// CE 5.3 - routine with while loop for random incrementing of midi note numbers
 
+(
+~noteFunc = {
+	var num = 48;
+	while({num < 84}, {
+		num.yield;
+		num = num + rrand(1, 4);
+	});
+};
+~noteGen = Routine(~noteFunc);
+)
+
+~noteGen.next;
+~noteGen.reset;
 
 
 
