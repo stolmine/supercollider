@@ -930,11 +930,37 @@ FreqScope.new;
 }.play;
 )
 
+// CE 3.26 - ringz and resonz
 
+(
+{
+	var sig, exc;
+	exc = Impulse.ar(1);
+	sig = Ringz.ar(
+		exc,
+		freq: 800,
+		decayTime: 1/3
+	);
+	sig = sig * 0.2 ! 2;
+}.play;
+)
 
+// getting an error for non audio rate input to ringz, hmmmm
+// Ringz does not want us to name the first argument, if we use 'In:' it assumes the input is a float number and not an audio rate signal
 
-
-
+(
+{
+	var sig, exc;
+	exc = PinkNoise.ar(10);
+	sig = Resonz.ar(
+		exc,
+		freq: 800,
+		bwr: 0.001,
+		mul: 1 / 0.001.sqrt
+	);
+	sig = sig * 0.5 ! 2;
+}.play;
+)
 
 
 
