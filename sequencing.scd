@@ -20,9 +20,26 @@ f = {
 
 f.();
 
+// CE 5.2 - routine, .next, .reset
 
+(
+~eventA = {SinOsc.ar(60.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
+~eventB = {SinOsc.ar(70.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
+~eventC = {SinOsc.ar(75.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
 
+f = {
+	~eventA.play;
+	1.yield;
+	~eventB.play;
+	1.yield;
+	~eventC.play;
+	1.yield;
+};
+r = Routine(f);
+)
 
+r.next;
+r.reset;
 
 
 

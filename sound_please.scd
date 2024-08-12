@@ -970,4 +970,12 @@ FreqScope.new;
 
 
 
+
+
+
+
+
+
+
+
 // white space because I want to type in the middle of my screen instead of the gd bottom
