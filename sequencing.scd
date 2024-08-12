@@ -58,7 +58,24 @@ f.value;
 ~noteGen.next;
 ~noteGen.reset;
 
+// CE 5.4 - using routine.play; to automatically advance a routine
 
+(
+~eventA = {SinOsc.ar(60.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
+~eventB = {SinOsc.ar(70.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
+~eventC = {SinOsc.ar(75.midicps ! 2) * Line.kr(0.1, 0, 1, 2)};
+
+f = { // using default conditions treats yield values as pause durations, measured in seconds. Knowing this we can build simple melodies with irregular timing.
+	~eventA.play;
+	0.5.yield;
+	~eventB.play;
+	1.5.yield;
+	~eventC.play;
+	1.yield;
+};
+r = Routine(f);
+)
+r.play;
 
 
 
