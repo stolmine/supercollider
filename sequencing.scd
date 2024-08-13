@@ -96,8 +96,28 @@ r = Routine(f);
 r.play;
 r.reset;
 
+// CE 5.6 - infinite length routines
 
+(
+~playTone = { |freq|
+	{SinOsc.ar(freq ! 2) * Line.kr(0.1, 0, 0.2, 2)}.play;
+};
+r = Routine({
+	loop({
+		~playTone.(72.midicps);
+		0.4.yield;
+		[62, 63, 64].do({ |n|
+			~playTone.(n.midicps);
+			(0.4 / 3).yield;
+		});
+		~playTone.(87.midicps);
+		(0.4).yield;
+	});
+});
+)
 
+r.play;
+r.stop;
 
 
 
