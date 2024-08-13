@@ -99,11 +99,11 @@ r.reset;
 // CE 5.6 - infinite length routines
 
 (
-~playTone = { |freq|
+~playTone = { |freq| // this notation produces an argument that later gets filled by each portion of our routine's loop. ~playTone.(freq).
 	{SinOsc.ar(freq ! 2) * Line.kr(0.1, 0, 0.2, 2)}.play;
 };
 r = Routine({
-	loop({
+	loop({ // placing a loop inside the routine allows it to produce a sequence of infinite length, we do need to remember to always place at least one .yield in every routine or we run the risk of producing a hang
 		~playTone.(72.midicps);
 		0.4.yield;
 		[62, 63, 64].do({ |n|
@@ -112,12 +112,23 @@ r = Routine({
 		});
 		~playTone.(87.midicps);
 		(0.4).yield;
+		[77, 84].do({ |n|
+			~playTone.(n.midicps);
+			(0.4 / 2).yield;
+		});
 	});
 });
 )
 
 r.play;
 r.stop;
+
+
+
+
+
+
+
 
 
 
