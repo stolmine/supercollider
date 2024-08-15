@@ -962,7 +962,29 @@ FreqScope.new;
 }.play;
 )
 
+// attempting a kick drum, did not go as planned, analyze why
 
+(
+SynthDef.new(\kick, {
+	arg freq = 100, amp = 0.2, atk = 0.001, dec = 0.3, slev = 0.4, rel = 1, gate = 0, out = 0;
+	var sig, env, penv;
+	env = EnvGen.kr(
+		Env.adsr(atk, dec, slev, rel),
+		doneAction: 1
+	);
+	freq = freq + penv;
+	sig = SinOsc.ar(freq);
+	sig = sig * env;
+	sig = sig * amp;
+	sig = sig ! 2;
+	Out.ar(out, sig);
+}).add;
+)
+
+x = Synth(\kick);
+x.set(\freq, 450);
+x.set(\amp, 0.5);
+x.set(\gate, 0, \rel, 3);
 
 
 
