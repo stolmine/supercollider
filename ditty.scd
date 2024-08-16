@@ -2,7 +2,7 @@
 
 (
 SynthDef.new(\hat, {
-	arg amp=0.8, atk=0.01, rel=0.3, c1=1, c2=(-12), pan=0, out=0;
+	arg amp=0.8, atk=0.01, rel=0.3, c1=1, c2=(-12), bCutoff=13000, bQ=0.5, pan=0, out=0;
 	var sig, env;
 	env = Env(
 		[0, 1, 0],
@@ -11,6 +11,7 @@ SynthDef.new(\hat, {
 	).kr(2);
 	sig = WhiteNoise.ar(0.5, 0);
 	sig = sig * env;
+	sig = RLPF.ar(sig, bCutoff, bQ, 0.75);
 	sig = Pan2.ar(sig, pan, amp);
 	Out.ar(out, sig);
 }).add;
@@ -38,11 +39,14 @@ p = Pbind(
 	// timing in seconds (by default 1 = 1 second)
 	\dur, Pseq([0.05, Rest(0.05), 0.05, Rest(0.05)], inf),
 	// control release
-	\rel, Pseq([0.3, 0.1, 0.2, 0.05, 0.5], inf),
+	\rel, Pseq([0.15, 0.05, 0.1, 0.025, 0.25], inf),
 	// and amplitude
-	\amp, Pseq([0.5, 0.2, 0.5, 0.3, 0.5, 0.3] * 0.5, inf),
+	\amp, Pseq([0.5, 0.2, 0.5, 0.3, 0.4] * 0.5, inf),
 	// and attack
-	\atk, Pseq([[0.01].dup(4), 0.1], inf)
+	\atk, Pseq([[0.01].dup(4), 0.1], inf),
+	// and BRF cutoff + res
+	\bCutoff, Pseq([Pwhite(1000, 20000)], inf),
+	\bQ, Pseq([Pwhite(0.1, 0.9)], inf)
 ).play;
 )
 
@@ -50,8 +54,9 @@ p = Pbind(
 x = Pbind(
 	\instrument, \kick,
 	\midinote, Pseq([30], inf),
-	\dur, Pseq([1, 0.25, 0.25, Rest(), 0.5, 1], inf),
-	\amp, Pseq([0.8], inf)
+	\dur, Pseq([0.25, 0.25/2, 0.25/2, Rest(), 0.5], inf),
+	\amp, Pseq([0.8], inf),
+	\freqA, Pseq([1000, 500, 1500, 250], inf)
 ).play;
 )
 
