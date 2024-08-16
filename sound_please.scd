@@ -1003,7 +1003,25 @@ SynthDef.new(\kick, {
 
 x = Synth.new(\kick, [\freqA, 1000, \amp, 1]);
 
+// let's try a noise hat
 
+(
+SynthDef.new(\hat, {
+	arg amp=0.8, atk=0.01, rel=0.3, c1=1, c2=(-12), pan=0, out=0;
+	var sig, env;
+	env = Env(
+		[0, 1, 0],
+		[atk, rel],
+		[c1, c2]
+	).kr(2);
+	sig = WhiteNoise.ar(0.5, 0);
+	sig = sig * env;
+	sig = Pan2.ar(sig, pan, amp);
+	Out.ar(out, sig);
+}).add;
+)
+
+y = Synth.new(\hat);
 
 
 
