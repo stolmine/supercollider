@@ -47,22 +47,21 @@ p = Pbind(
 	// and BRF cutoff + res
 	\bCutoff, Pseq([Pwhite(1000, 20000)], inf),
 	\bQ, Pseq([Pwhite(0.1, 0.9)], inf)
-).play;
+);
 )
 
 (
 x = Pbind(
 	\instrument, \kick,
 	\midinote, Pseq([30], inf),
-	\dur, Pseq([0.25, 0.25/2, 0.25/2, Rest(), 0.5], inf),
+	\dur, Pseq([0.05, 0.25/2, 0.25/2, Rest(0.5), 0.5], inf),
 	\amp, Pseq([0.8], inf),
 	\freqA, Pseq([1000, 500, 1500, 250], inf)
-).play;
+);
 )
 
-
-
-
+x.play(quant: 4);
+p.play(quant: 4);
 
 
 
