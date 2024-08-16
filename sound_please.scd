@@ -1021,7 +1021,12 @@ SynthDef.new(\hat, {
 }).add;
 )
 
-y = Synth.new(\hat);
+y = Synth.new(\hat, [\atk, 0.01, \rel, 0.05]);
+
+// success!
+
+
+
 
 
 
