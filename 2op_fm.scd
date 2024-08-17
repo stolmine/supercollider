@@ -87,21 +87,24 @@ Synth(\multiSine);
 // Or with custom parameters:
 Synth(\multiSine, [\numOscs, 30, \minFreq, 300, \maxFreq, 3000, \amp, 0.3]);
 
+TempoClock.default = TempoClock.new(93/60);
+
+~durList = [1/5, 1/10, 1/10, 1/2.5, 1/5, 1/10, 1/10, 1/5, 1/2.5];
 
 // Play a sequence using the FM synth
 (
 Pbind(
 	\instrument, Pseq([\fm2op, \fm2op, \fm2op, \kick, \kick, \hat, \hat, \fm2op, \kick, \fm2op, \hat, \kick, \hat], inf),
-	\midinote, Pseq([20, 100, 10, 10, 500, 20], inf),
-	\dur, Pseq([1/5, 1/10, 1/10, 1/2.5, 1/5, 1/2.5, 1/10], inf),
-    \modFreq, Pseq([2000, 1200, 100, 7000], inf),
-    \modIndex, Pseq([0, 0, 1, 0, 3, 0, 0, 7], inf),
+	\midinote, Pseq([20, 100, 10, 10, 250, 20], inf),
+	\dur, Pseq(~durList, inf),
+	\modFreq, Pseq(([1700, 1200, 100, 500, 2000, 9000] * (~durList + 5)), inf),
+    \modIndex, Pseq([0, 0, 1, 0, 3, 0, 0, 2], inf),
     \amp, 0.3,
-	\pan, Pseq([0, 0, 0, 0, 0, 0, (-1), 1], inf),
+	\pan, Pseq([0, 0, 0, 0, 0, 0, (-1), 0, 1], inf),
     \atk, Pseq([0.01, 0.01, 0.01, 0.01, 0.01, 0.05], inf),
-    \rel, Pseq([0.1, 0.1, 0.1, 0.1, 0.1, 0.05, 0.6], inf),
+    \rel, Prand([1/5, 1/10, 1/10, 1/2.5, 1/5, 1/2.5, 1/10, 1], inf),
 	\freqA, Pseq([1000, 1500, 1000, 750], inf),
 	\bCutoff, Pwhite(300, 15000, inf),
-	\penvDepth, Pseq([700, 0, 0, 1200, 0, 0, 0, 0], inf)
+	\penvDepth, Pseq([700, 0, 0, 1200, 0, 0, 0, 0] * ~durList, inf)
 ).play;
 )
