@@ -913,7 +913,7 @@ FreqScope.new;
 {
 	var sig;
 	sig = WhiteNoise.ar(1 ! 2);
-	2.do({sig = LPF.ar(sig, 1000)});
+	6.do({sig = LPF.ar(sig, 1000)});
 	sig = sig * 0.25;
 }.play;
 )
@@ -1024,9 +1024,28 @@ SynthDef.new(\hat, {
 
 y = Synth.new(\hat, [\atk, 0.01, \rel, 0.05]);
 
+
 // success!
 
+// an ikeda bass patch
 
+(
+SynthDef.new(\bass, {
+	arg freq=60, amp=0.5, atk=0.1, rel=2.3, c1=1, c2=2.5, pan=0, out=0;
+	var sig, env;
+	env = Env(
+		[0, 1, 0],
+		[atk, rel],
+		[c1, c2]
+	).kr(2);
+	sig = SinOsc.ar(freq, 0, amp, 0);
+	sig = sig * env;
+	sig = Pan2.ar(sig, pan, amp);
+	Out.ar(out, sig);
+}).add;
+)
+
+x = Synth.new(\bass);
 
 
 
